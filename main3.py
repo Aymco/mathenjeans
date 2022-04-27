@@ -60,11 +60,15 @@ def main():
         while 100 * probaInt <= 99 * T ** (tirees - 1):
 
             listCalcul = formuleBrute(listCalcul, T)
-             #print(listCalcul)
+            #print(listCalcul)
             probaInt = listCalcul[T - 1]
             p = (100 * probaInt / T ** (tirees))
-            if(tirees%50 == 0):
-                print( str(tirees)+  "  " +  str(p).replace(".", ","))
+            if(tirees%100 == 0):
+                print("\nPersonnes: " + str(1) + "\nTaille de la collection: " + str(
+                    T) + "\nCartes tirees: " + str(tirees) + "\nProbabilitée de completer: " + str(
+                    100 * probaInt) + "%")
+
+                #print( str(tirees)+  "  " +  str(p).replace(".", ","))
             proba.append(p)
             probaX.append(tirees)
 

@@ -23,17 +23,19 @@ def formuleInt(types, tirées):
 
 def main():
     _input = int(input("#Types de cartes : "))
-    for i in range(7):
+    step = int(input("#ecart : "))
+    for i in range(1):
         T = (i + 1) * _input
 
-        tirées = 1
+        tirées = T * 5
         probaInt = 0
 
-        while 100 * probaInt <= 98 * T ** (tirées - 1):
+        while 100 * probaInt <= 98 * T ** (tirées - step):
             probaInt = formuleInt(T, tirées)
             proba.append((100 * probaInt / T ** (tirées)))
+            print("\nPersonnes: " + str(1) + "\nTaille de la collection: " + str(T) + "\nCartes tirees: " + str(tirées) + "\nProbabilitée de completer: " + str(100 * probaInt) + "%")
 
-            tirées += 1
+            tirées += step
 
         print(str(T) + " : " + str(tirées - 1))
         X.append(T)

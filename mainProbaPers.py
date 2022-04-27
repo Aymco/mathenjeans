@@ -7,23 +7,21 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # la formule renvoie le resulat multiplié par types^tirées
 
-X = [0,1,2,3]
-Y = [2,2,1,3]
-Z = [0,1,1,0]
 
-X = np.arange(-5, 5, 0.25)
-Y = np.arange(-5, 5, 0.25)
+Z = np.array([[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]])
+Ze = np.array([[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]])
+X=[20,40,60,80,100]
+Y = [1,2,3,4,5]
 X, Y = np.meshgrid(X, Y)
-R = np.sqrt(X**2 + Y**2)
-Z = np.sin(R)
 
-fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
-ax.plot_wireframe(X, Y, Z, rstride=2, cstride=2)
-plt.show()
 
 proba = []
 probaX = []
+
+moy = []
+moyX = []
 esperances = []
+ProbaTirees = []
 def formuleInt(types, tirees):
     somme = 0
     signe = 1
@@ -50,67 +48,87 @@ def formulePlusieurs(types, tirees, personnes):
 def main():
 
 
-    T = int(input("#Types de cartes : "))
+    t = int(input("#Types de cartes : "))
+    Pers = int(input("#Personnes : "))
+
+    for j in range(5):
+        for i in range(Pers):
+
+            T =  t* (j+1)
+            tirees = T
+            personnes = i+1
+
+            #print("nombres de personnes :")
+            #print(personnes)
+
+            probaInt = 0
+
+            esperance = 0
+
+            proba.append(0)
+            probaX.append(0)
+            proba.append(0)
+            probaX.append(T - 1)
+
+            while 100 * probaInt <= 99 :
 
 
 
-    for i in range(1):
+                precProba = probaInt
 
-        tirees = 2 * T
-        personnes = 1
+                probaInt = formulePlusieurs(T, tirees, personnes)
+                proba.append(probaInt * 100)
+                probaX.append(tirees)
 
-        print("nombres de personnes :")
-        print(personnes)
-
-        probaInt = 0
-
-        esperance = 0
-
-        #proba.append(0)
-        #probaX.append(0)
-        #proba.append(0)
-        #probaX.append(T - 1)
-
-        while 100 * probaInt <= 99 :
+                # une fois le nombre de cartes tirees trouvées, on imprime le message
+                # print(str(5*i) + "%:\nCartes tirees: " + str(tirees - 1) +
+                #       "\nPourcentage de Chances: " + str(100*probaInt / T ** (tirees-1)) + "%")
+                if(tirees%10 == 0):
+                    print("\nPersonnes: " + str(personnes) + "\nTaille de la collection: " + str(
+                        T) + "\nCartes tirees: " + str(tirees) + "\nProbabilitée de completer: " + str(
+                        100 * probaInt) + "%")
+                    #print("\nCartes tirees: " + str(tirees - 1) + "\nPourcentage de Chances: " + str(100*probaInt) + "%")
+                    #print(tirees)
+                #print(str(tirees)+" : "+str(probaInt * 100).replace(".", ","))
 
 
+                probaInt
+                p = (probaInt - precProba)
+                #print(p)
+                esperance += tirees * p
+                moy.append(p)
+                moyX.append(tirees)
 
-            precProba = probaInt
+                tirees += 1
 
-            probaInt = formulePlusieurs(T, tirees, personnes)
-            proba.append(probaInt * 100)
-            probaX.append(personnes)
+            #print(str(T) + " cartes: Espérance: " + str(esperance))
+            esperances.append(esperance)
+            ProbaTirees.append(tirees)
 
-            # une fois le nombre de cartes tirees trouvées, on imprime le message
-            # print(str(5*i) + "%:\nCartes tirees: " + str(tirees - 1) +
-            #       "\nPourcentage de Chances: " + str(100*probaInt / T ** (tirees-1)) + "%")
-            #if(tirees%100 == 0):
-            print("\nPersonnes: " + str(personnes) + "\nTaille de la collection: " + str(T) +"\nCartes tirees: " + str(tirees) + "\nProbabilitée de completer: " + str(100*probaInt) + "%")
-                #print(tirees)
-            #print(str(tirees)+" : "+str(probaInt * 100).replace(".", ","))
+            Z[i,j] = tirees
+            Ze[i,j] = esperance
 
+            plt.plot(moyX, moy, lw=2, label=str(T))
+            moy.clear()
+            moyX.clear()
+            #plt.plot(probaX, proba, lw=1, label=str(personnes))
+            #proba.clear()
+            #probaX.clear()
 
-
-            #p = (probaInt - precProba)
-            #print(p)
-            #esperance += tirees * p
-
-            personnes += 1
-
-        print(str(T) + " cartes: Espérance: " + str(esperance))
-        #esperances[i] = esperance
-
-        plt.plot(probaX, probaX, proba, lw=1, label=str(personnes))
-        proba.clear()
-        probaX.clear()
-
-    #for i in range(3):
-    #    print(str(T) + " cartes: Espérance: " + str(esperances[i]))
+    for i in range(Pers):
+        print(str(T) + " cartes, " + str(i+1) + "Personnes : Espérance = " + str(esperances[i])+ " ; tirées = " + str(ProbaTirees[i]))
 
     #plt.title('Probabilité pour ' + str(T) + ' cartes avec 1 à 4 personnes')
-    #plt.xlabel('Nombre de cartes tirées')
-    #plt.ylabel('Probabilitée')
+
     plt.legend()
     plt.grid(True)
+    plt.show()
+
+    print(Z)
+    print(Ze)
+
+    fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
+    ax.plot_wireframe(X, Y, Z)
+    ax.plot_wireframe(X, Y, Ze, color='r')
     plt.show()
 main()

@@ -4,7 +4,11 @@ import matplotlib.pyplot as plt
 
 proba = []
 probaX = []
+
+moy = []
+moyX = []
 esperances = []
+ProbaTirees = []
 def formuleInt(types, tirees):
     somme = 0
     signe = 1
@@ -32,13 +36,14 @@ def main():
 
 
     T = int(input("#Types de cartes : "))
+    Pers = int(input("#Personnes : "))
 
 
 
-    for i in range(1):
+    for i in range(Pers):
 
         tirees = T
-        personnes = 2
+        personnes = i+1
 
         print("nombres de personnes :")
         print(personnes)
@@ -66,7 +71,10 @@ def main():
             # print(str(5*i) + "%:\nCartes tirees: " + str(tirees - 1) +
             #       "\nPourcentage de Chances: " + str(100*probaInt / T ** (tirees-1)) + "%")
             if(tirees%100 == 0):
-                print("\nCartes tirees: " + str(tirees - 1) + "\nPourcentage de Chances: " + str(100*probaInt) + "%")
+                print("\nPersonnes: " + str(personnes) + "\nTaille de la collection: " + str(
+                    T) + "\nCartes tirees: " + str(tirees) + "\nProbabilitée de completer: " + str(
+                    100 * probaInt) + "%")
+                #print("\nCartes tirees: " + str(tirees - 1) + "\nPourcentage de Chances: " + str(100*probaInt) + "%")
                 #print(tirees)
             #print(str(tirees)+" : "+str(probaInt * 100).replace(".", ","))
 
@@ -75,18 +83,24 @@ def main():
             p = (probaInt - precProba)
             #print(p)
             esperance += tirees * p
+            moy.append(p)
+            moyX.append(tirees)
 
-            tirees += 10
+            tirees += 1
 
-        print(str(T) + " cartes: Espérance: " + str(esperance))
-        esperances[i] = esperance
+        #print(str(T) + " cartes: Espérance: " + str(esperance))
+        esperances.append(esperance)
+        ProbaTirees.append(tirees)
 
-        plt.plot(probaX, proba, lw=1, label=str(personnes))
-        proba.clear()
-        probaX.clear()
+        plt.plot(moyX, moy, lw=2, label=str(T))
+        moy.clear()
+        moyX.clear()
+        #plt.plot(probaX, proba, lw=1, label=str(personnes))
+        #proba.clear()
+        #probaX.clear()
 
-    for i in range(3):
-        print(str(T) + " cartes: Espérance: " + str(esperances[i]))
+    for i in range(Pers):
+        print(str(T) + " cartes, " + str(i+1) + "Personnes : Espérance = " + str(esperances[i])+ " ; tirées = " + str(ProbaTirees[i]))
 
     #plt.title('Probabilité pour ' + str(T) + ' cartes avec 1 à 4 personnes')
     #plt.xlabel('Nombre de cartes tirées')

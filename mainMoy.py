@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 
 proba = []
 probaX = []
+moy = []
+moyX = []
 X= []
 Y = []
 print("ok")
@@ -37,22 +39,36 @@ def main():
         #probaX.append(1)
 
         esperance = 0
-        proba = 0
+        prob = 0
 
-        while 100 * proba <= 99:
+        while 100 * prob <= 99:
 
-            precProba = proba
+            precProba = prob
             listCalcul = formuleBrute(listCalcul, T)
-            proba = listCalcul[T - 1] / T ** (tirees)
-            p = (proba - precProba)
-            print(p)
+            prob = listCalcul[T - 1] / T ** (tirees)
+            p = (prob - precProba)
+            #print(p)
             esperance += tirees * p
+            moy.append(p)
+            moyX.append(tirees)
 
             tirees += 1
 
 
         print(str(T) + " cartes: Espérance: " + str(esperance))
-        
+
+        plt.plot(moyX, moy, lw=2, label=str(T))
+        moy.clear()
+        moyX.clear()
+        #plt.plot(probaX, proba,  lw=2, label=str(T))
+        #proba.clear()
+        #probaX.clear()
+        plt.title('Probabilité pour ' + str(T) + ' cartes')
+        plt.xlabel('Nombre de cartes tirées')
+        plt.ylabel('Probabilité')
+        plt.legend()
+        plt.grid(True)
+        plt.show()
 
 '''
         while 100 * probaInt <= 99 * T ** (tirees - 1):
@@ -72,22 +88,14 @@ def main():
         print(str(T) + " : " + str(tirees - 1))
         X.append(T)
         Y.append(tirees - 1)
-        plt.plot(probaX, proba,  lw=2, label=str(T))
-        proba.clear()
-        probaX.clear()
     #print(proba)
 
 
 
+    '''
 
 
-    plt.title('Probabilité pour ' + str(T) + ' cartes')
-    plt.xlabel('Nombre de cartes tirées')
-    plt.ylabel('Probabilité')
-    plt.legend()
-    plt.grid(True)
-    plt.show()
-'''
+
 
 '''
         for i in range(20):
@@ -108,11 +116,10 @@ def main():
 '''
 
 main()
-'''
-plt.plot(X,Y, 'r',lw=2)
-plt.title('Nombre de cartes nescessaires pour 99% en fonction du nombre total de cartes')
-plt.xlabel('Nombre de cartes differentes')
-plt.ylabel('Nombre de cartes tirees')
-plt.legend()
-plt.show()
-'''
+
+#plt.plot(X,Y, 'r',lw=2)
+#plt.title('escpérance')
+#plt.xlabel('Nombre de cartes differentes')
+#plt.ylabel('Nombre de cartes tirees')
+#plt.legend()
+#plt.show()

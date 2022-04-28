@@ -1,15 +1,17 @@
 import math
 
+# une formule plus rapide mais qui nécéssite de passer
+# par tous les entiers précédents
 def formuleRapide(listC, T):
     for i in range(T):
         value = listC[T-i-1]
-        if(i!=0):
-            #transition diagonale
+        if(i != 0):
+            # transition diagonale
             listC[T-i] += value * (i+1)
 
-        #transition verticale
+        # transition verticale
         listC[T-i-1] = value * (T-i-0)
-            
+
     return (listC)
 
 
@@ -40,7 +42,6 @@ def formuleFloat(types, tirees):
         # pour alterner + et - devant de maniere plus efficace que (-1)^k
         signe = -signe
 
-    #print ("test: "  +" str(types ** tirees)+ "+ str(types)+" "+ str(tirees))
     return somme / types ** tirees
 
 

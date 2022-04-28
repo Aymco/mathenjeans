@@ -1,4 +1,4 @@
-import math
+import libFormules as libF
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import cm
@@ -24,27 +24,6 @@ plt.show()
 proba = []
 probaX = []
 esperances = []
-def formuleInt(types, tirees):
-    somme = 0
-    signe = 1
-    for k in range(types):
-
-        # la fonction choose s'appelle "comb" dans python
-        somme += signe * math.comb(types, k) * (types - k) ** tirees
-
-        # pour alterner + et - devant de maniere plus efficace que (-1)^k
-        signe = -signe
-
-    #print ("test: "  +" str(types ** tirees)+ "+ str(types)+" "+ str(tirees))
-    return somme / types ** tirees
-
-
-def formulePlusieurs(types, tirees, personnes):
-    total = 1
-    for n in range(personnes):
-        total *= formuleInt(types, personnes * tirees - n * types)
-
-    return total
 
 
 def main():
@@ -77,7 +56,7 @@ def main():
 
             precProba = probaInt
 
-            probaInt = formulePlusieurs(T, tirees, personnes)
+            probaInt = libF.formulePlusieurs(T, tirees, personnes)
             proba.append(probaInt * 100)
             probaX.append(personnes)
 

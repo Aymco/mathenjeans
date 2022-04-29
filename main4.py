@@ -74,7 +74,7 @@ def main():
                 print("\nPersonnes: " + str(personnes) + "\nTaille de la collection: " + str(
                     T) + "\nCartes tirees: " + str(tirees) + "\nProbabilitée de completer: " + str(
                     100 * probaInt) + "%")
-                #print("\nCartes tirees: " + str(tirees - 1) + "\nPourcentage de Chances: " + str(100*probaInt) + "%")
+                #print("\nC1artes tirees: " + str(tirees - 1) + "\nPourcentage de Chances: " + str(100*probaInt) + "%")
                 #print(tirees)
             #print(str(tirees)+" : "+str(probaInt * 100).replace(".", ","))
 

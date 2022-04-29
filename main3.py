@@ -66,15 +66,18 @@ def main():
             if(tirees%100 == 0):
                 print("\nPersonnes: " + str(1) + "\nTaille de la collection: " + str(
                     T) + "\nCartes tirees: " + str(tirees) + "\nProbabilitée de completer: " + str(
-                    100 * probaInt) + "%")
+                    p) + "%")
 
                 #print( str(tirees)+  "  " +  str(p).replace(".", ","))
             proba.append(p)
             probaX.append(tirees)
 
             tirees += 1
-        print(str(tirees) + " : " +  str(p))
-        print(str(T) + " : " + str(tirees - 1))
+        #print(str(tirees) + " : " +  str(p))
+        #print(str(T) + " : " + str(tirees - 1))
+        print("\nPersonnes: " + str(1) + "\nTaille de la collection: " + str(
+            T) + "\nCartes tirees: " + str(tirees -1) + "\nProbabilitée de completer: " + str(
+            p) + "%")
         X.append(T)
         Y.append(tirees - 1)
         plt.plot(probaX, proba,  lw=2, label=str(T))

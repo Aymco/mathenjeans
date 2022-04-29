@@ -8,11 +8,7 @@ from mpl_toolkits.mplot3d import Axes3D
 # la formule renvoie le resulat multiplié par types^tirées
 
 
-Z = np.array([[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]])
-Ze = np.array([[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]])
-X=[20,40,60,80,100]
-Y = [1,2,3,4,5]
-X, Y = np.meshgrid(X, Y)
+
 
 
 proba = []
@@ -49,11 +45,26 @@ def main():
 
 
     t = int(input("#Types de cartes : "))
+    rept = int(input("#repetitions : "))
     Pers = int(input("#Personnes : "))
+    #repP = int(input("#repetitions Personnes : "))
 
-    for j in range(5):
+    Z = np.array([[0] * rept] * Pers)
+    Ze = np.array([[0] * rept] * Pers)
+    Zm = np.array([[0] * rept] * Pers)
+    X = []
+    Y = []
+    for j in range(rept):
+        T = t * (j + 1)
+        X.append(T)
+    for i in range(Pers):
+        personnes = i + 1
+        Y.append(personnes)
+
+    for j in range(rept):
         for i in range(Pers):
-
+            print("i" + str(i))
+            print("j" + str(j))
             T =  t* (j+1)
             tirees = T
             personnes = i+1
@@ -105,6 +116,7 @@ def main():
             esperances.append(esperance)
             ProbaTirees.append(tirees)
 
+            Zm[i,j] = T
             Z[i,j] = tirees
             Ze[i,j] = esperance
 
@@ -114,6 +126,8 @@ def main():
             #plt.plot(probaX, proba, lw=1, label=str(personnes))
             #proba.clear()
             #probaX.clear()
+
+    X, Y = np.meshgrid(X, Y)
 
     for i in range(Pers):
         print(str(T) + " cartes, " + str(i+1) + "Personnes : Espérance = " + str(esperances[i])+ " ; tirées = " + str(ProbaTirees[i]))
@@ -130,5 +144,11 @@ def main():
     fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
     ax.plot_wireframe(X, Y, Z)
     ax.plot_wireframe(X, Y, Ze, color='r')
+    #5 ax.plot_wireframe(X, Y, Zm, color='g')
+    plt.show()
+    fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
+    ax.plot_wireframe(X, Y, Z)
+    ax.plot_wireframe(X, Y, Ze, color='r')
+    ax.plot_wireframe(X, Y, Zm, color='g')
     plt.show()
 main()
